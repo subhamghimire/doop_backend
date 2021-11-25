@@ -57,8 +57,4 @@ class User extends Authenticatable
         return $this->belongsToMany(Item::class,'user_items');
     }
 
-    public function transactions(): \Illuminate\Database\Eloquent\Relations\HasMany
-    {
-        return $this->hasMany(Transaction::class,'user_id', 'id');
-    }
 }

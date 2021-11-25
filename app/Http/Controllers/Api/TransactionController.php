@@ -16,15 +16,8 @@ class TransactionController extends ApiController
         $itemIds = $request->get('item_ids');
         $amount = 0;
 
-        $itemPrice = [];
         foreach ($itemIds as $itemId){
-            $price = Item::find($itemId)->price;
-            $amount += $price;
-            $itemPrice[] = [
-                'item_id' => $itemId,
-                'amount' => $price,
-                'user_id' => $user->id
-            ];
+            $amount += Item::find($itemId)->price;
         }
 
         if ($user->balance->balance < $amount){
@@ -37,7 +30,6 @@ class TransactionController extends ApiController
             'balance' => $user->balance->balance - $amount
         ]);
 
-        $user->transactions()->insert($itemPrice);
 
         return $this->successResponse();
     }
