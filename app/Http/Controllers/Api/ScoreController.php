@@ -24,19 +24,4 @@ class ScoreController extends ApiController
         $highScore = Score::where('user_id',auth()->user()->id)->max('score');
         return $this->successResponse($highScore,200);
     }
-
-    public function sendNotification(Request $request)
-    {
-        Log::info("Api called");
-        Log::info($request->all());
-        if ($request->get('send') == true) {
-            return $this->successResponse();
-        }
-        return $this->failResponse();
-    }
-
-    public function receiveNotification()
-    {
-      Log::info('Api called GET');
-    }
 }
