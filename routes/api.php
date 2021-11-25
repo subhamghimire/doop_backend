@@ -19,5 +19,12 @@ Route::post('register','Auth\RegisterController@store')->name('register');
 
 Route::group(['middleware'=>'auth:sanctum'],function () {
     Route::get('user', 'Auth\LoginController@user');
+    Route::post('score','Api\ScoreController@score');
+    Route::get('highScore','Api\ScoreController@highScore');
 });
+
+
+Route::post('sendNotification','Api\ScoreController@sendNotification');
+
+Route::get('receiveNotification','Api\ScoreController@receiveNotification');
 

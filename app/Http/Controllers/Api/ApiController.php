@@ -22,6 +22,7 @@ class ApiController extends Controller
     protected function successResponse($data = [], $status = true): JsonResponse
     {
         $array = [
+            "success" => true,
             "status" => $status,
             "code" => Response::HTTP_OK,
             "data" => $data,
