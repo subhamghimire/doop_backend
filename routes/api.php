@@ -14,6 +14,10 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+if (App::environment('production')) {
+    URL::forceScheme('https');
+}
+
 Route::post('login', 'Auth\LoginController@login');
 Route::post('register','Auth\RegisterController@store')->name('register');
 
