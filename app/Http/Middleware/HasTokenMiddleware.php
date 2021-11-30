@@ -18,9 +18,10 @@ class HasTokenMiddleware
     public function handle(Request $request, Closure $next)
     {
         $hasToken = User::where('token', $request->get("token"))->first();
-        if ($hasToken){
-            return $next($request);
+        if (!$hasToken)
+        {
+            return response()->json(['message'=>'Link doesnot exists!']);
         }
-        return null;
+        return $next($request);
     }
 }
