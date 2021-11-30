@@ -17,7 +17,7 @@ use Illuminate\Support\Facades\Route;
 Route::post('login', 'Auth\LoginController@login');
 Route::post('register','Auth\RegisterController@store')->name('register');
 
-Route::group(['middleware'=>'auth:sanctum'],function () {
+Route::group(['middleware'=>'auth'],function () {
     Route::get('user', 'Auth\LoginController@user');
     Route::post('score','Api\ScoreController@score');
     Route::get('highScore','Api\ScoreController@highScore');
