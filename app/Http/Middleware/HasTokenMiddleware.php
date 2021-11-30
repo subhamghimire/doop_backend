@@ -23,6 +23,7 @@ class HasTokenMiddleware
             return response()->json(['message'=>'Token doesnot exists!']);
         }
         $hasToken = DB::table('users')->where('token','=', $token)->first();
+        dd($hasToken);
         if (!$hasToken){
             return response()->json(['message'=>'Could not verify user!']);
         }
