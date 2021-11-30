@@ -22,7 +22,7 @@ class HasTokenMiddleware
         if (!$token){
             return response()->json(['message'=>'Token doesnot exists!']);
         }
-        $hasToken = User::where('token','=', $token)->first();
+        $hasToken = User::where('token', $token)->first();
         return response()->json($hasToken);
 //        if (!$hasToken){
 //            return response()->json($hasToken);
