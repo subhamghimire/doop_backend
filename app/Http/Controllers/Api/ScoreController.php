@@ -12,9 +12,7 @@ class ScoreController extends ApiController
 {
     public function score(Request $request)
     {
-        $user = User::where("token","=", "2ce336511ef62daa6efe302c0cc9f724")->first();
-        return $this->successResponse($user,200);
-
+        $user = User::where('token', $request->get('token'))->first();
         $score = Score::create([
            'score' => $request->get('score'),
            'user_id' => $user->id,
