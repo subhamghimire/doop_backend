@@ -5,7 +5,6 @@ namespace App\Http\Middleware;
 use App\Models\User;
 use Closure;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 
 class HasTokenMiddleware
 {
@@ -22,11 +21,10 @@ class HasTokenMiddleware
         if (!$token){
             return response()->json(['message'=>'Token doesnot exists!']);
         }
-        $hasToken = User::find(2);
-        return response()->json($hasToken);
-//        if (!$hasToken){
-//            return response()->json($hasToken);
-//        }
-//        return $next($request);
+        $hasToken = User::where('token', '=', $token)->first();
+        if (!$hasToken){
+            return response()->json(['message'=>'Could not verify user!']);
+        }
+        return $next($request);
     }
 }
