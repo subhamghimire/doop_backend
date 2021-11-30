@@ -23,6 +23,9 @@ class LoginController extends ApiController
 
         $token = substr(md5(rand(0, 9) . $user->email . now()), 0, 32);
 
+        $user->token = $token;
+        $user->save();
+
         return $this->successResponse([
             'user' => $user,
             'token' => $token,
