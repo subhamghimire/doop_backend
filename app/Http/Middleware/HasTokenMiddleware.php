@@ -18,6 +18,8 @@ class HasTokenMiddleware
     public function handle(Request $request, Closure $next)
     {
         $token = $request->get('token');
+        return response()->json($token);
+
         if (!$token){
             return response()->json(['message'=>'Token doesnot exists!']);
         }
