@@ -5,13 +5,14 @@ namespace App\Http\Controllers\Api;
 use App\Http\Controllers\Controller;
 use App\Http\Requests\BalanceRechargeRequest;
 use App\Models\Balance;
+use App\Models\User;
 use Illuminate\Http\Request;
 
 class BalanceController extends ApiController
 {
     public function recharge(BalanceRechargeRequest $request)
     {
-        $user = $request->user();
+        $user = User::where('token', $request->get('token'))->first();
         $balance = Balance::where('user_id', $user->id)->first();
         if (!$balance){
             Balance::create([

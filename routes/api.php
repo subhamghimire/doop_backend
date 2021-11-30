@@ -16,17 +16,12 @@ use Illuminate\Support\Facades\Route;
 
 Route::post('login', 'Auth\LoginController@login');
 Route::post('register','Auth\RegisterController@store')->name('register');
+Route::get('user', 'Auth\LoginController@user');
 
-Route::group(['middleware'=>'hasToken'],function () {
-    Route::get('user', 'Auth\LoginController@user');
-    Route::post('score','Api\ScoreController@score');
-    Route::get('highScore','Api\ScoreController@highScore');
-    Route::post('recharge','Api\BalanceController@recharge');
-    Route::post('purchase','Api\TransactionController@purchase');
+Route::group(['namespace'=> 'Api', 'middleware'=>'hasToken'], function () {
+    Route::post('score','ScoreController@score');
+    Route::get('highScore','ScoreController@highScore');
+    Route::post('recharge','BalanceController@recharge');
+    Route::post('purchase','TransactionController@purchase');
 });
-
-
-Route::post('sendNotification','Api\ScoreController@sendNotification');
-
-Route::get('receiveNotification','Api\ScoreController@receiveNotification');
 

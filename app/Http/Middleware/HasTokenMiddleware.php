@@ -17,10 +17,13 @@ class HasTokenMiddleware
      */
     public function handle(Request $request, Closure $next)
     {
-        $hasToken = User::where('token', $request->get("token"))->first();
-        if (!$hasToken)
-        {
-            return response()->json(['message'=>'Link doesnot exists!']);
+        $token = $request->get('token');
+        if (!$token){
+            return response()->json(['message'=>'Token doesnot exists!']);
+        }
+        $hasToken = User::where('token', '=', $token)->first();
+        if (!$hasToken){
+            return response()->json(['message'=>'Could not verify user!']);
         }
         return $next($request);
     }
