@@ -45,7 +45,7 @@ class ScoreController extends ApiController
         {
             $result[] = [
                 'position' => $key+1,
-                'score' => $player->scores_max_score,
+                'score' => $player->scores_max_score ?? 0,
                 'user' => $player->name
             ];
         }
