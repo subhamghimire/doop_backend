@@ -28,7 +28,6 @@ class UserFactory extends Factory
             'email_verified_at' => now(),
             'password' => \Hash::make('password@123'),
             'remember_token' => Str::random(10),
-            'token' => "testestest"
         ];
     }
 
