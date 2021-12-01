@@ -34,23 +34,22 @@ class ScoreController extends ApiController
 
     public function leaderBoard()
     {
-        $players = User::withMax('scores', 'score')
-            ->orderBy('scores_max_score', 'asc')
-            ->limit(5)
-            ->get();
+        $players = User::with('scores')->get();
 
         $result = [];
 
-        foreach ($players as $key=>$player)
+        foreach ($players as $player)
         {
-            if ($player->scores_max_score) {
-                $result[] = [
-                    'position' => $key + 1,
-                    'score' => $player->scores_max_score ?? 0,
-                    'user' => $player->name
-                ];
-            }
+            $result[] = [
+                'score' => $player->scores->max('score'),
+                'user' => $player->name
+            ];
         }
-        return $this->successResponse($result,200);
+
+        $r = collect($result)->filter((function ($score, $key) {
+            return $score["score"] != null;
+        }))->values()->all();
+
+        return $this->successResponse($r,200);
     }
 }
