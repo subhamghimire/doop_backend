@@ -23,7 +23,7 @@ class ScoreController extends ApiController
 
     public function highScore(Request $request)
     {
-        $user = User::find($request->get('token'));
+        $user = User::where("token", '=', $request->get('token'))->first();
         $highScore = Score::where('user_id', $user->id)->max('score');
         return $this->successResponse($highScore,200);
     }
