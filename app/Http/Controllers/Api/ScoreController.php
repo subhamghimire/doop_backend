@@ -35,7 +35,7 @@ class ScoreController extends ApiController
     public function leaderBoard()
     {
         $players = User::withMax('scores', 'score')
-            ->orderBy('scores_max_score','asc')
+            ->orderByDesc('scores_max_score')
             ->limit(5)
             ->get();
 
