@@ -22,7 +22,32 @@ class ScoreController extends ApiController
 
     public function highScore()
     {
-        $highScore = Score::where('user_id',auth()->user()->id)->max('score');
+        $highScore = Score::where('user_id', auth()->user()->id)->max('score');
         return $this->successResponse($highScore,200);
+    }
+
+    public function scoreBoard()
+    {
+        $scoreBoard = Score::where('user_id', auth()->user()->id)->orderBy('score', 'desc')->limit(5)->get();
+        return $this->successResponse($scoreBoard,200);
+    }
+
+    public function leaderBoard()
+    {
+        $players = User::withMax('scores', 'score')
+            ->orderByDesc('scores_max_score')
+            ->limit(5)
+            ->get();
+
+        $result = [];
+
+        foreach ($players as $player)
+        {
+            $result[] = [
+                'score' => $player->scores_max_score,
+                'user' => $player->name
+            ];
+        }
+        return $this->successResponse($result,200);
     }
 }

@@ -21,6 +21,8 @@ Route::get('user', 'Auth\LoginController@user');
 Route::group(['namespace'=> 'Api', 'middleware'=>'auth:sanctum'], function () {
     Route::post('score','ScoreController@score');
     Route::get('highScore','ScoreController@highScore');
+    Route::get('scoreBoard','ScoreController@scoreBoard');
+    Route::get('leaderBoard','ScoreController@leaderBoard');
     Route::post('recharge','BalanceController@recharge');
     Route::post('purchase','TransactionController@purchase');
 });
