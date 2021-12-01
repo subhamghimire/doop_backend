@@ -20,15 +20,13 @@ class LoginController extends ApiController
             return $this->failResponse();
         }
         $user = $request->user();
-
-        $token = substr(md5(rand(0, 9) . $user->email . now()), 0, 32);
-
-        $user->token = $token;
-        $user->save();
+        $token = $user->createToken('Personal Access Token');
 
         return $this->successResponse([
             'user' => $user,
-            'token' => $token,
+            'token' => $token->plainTextToken,
+            'token_type' => 'Bearer',
+            'access_token' => $token->accessToken,
         ], 200);
     }
 
@@ -36,7 +34,8 @@ class LoginController extends ApiController
     {
         $user = auth()->user();
         return response()->json([
-            'token' => $user->token,
+            'access_token' => $user->currentAccessToken(),
+            'token_type' => 'Bearer',
             'user' => $user,
             'success' => true
         ]);
@@ -50,7 +49,7 @@ class LoginController extends ApiController
     public function logout()
     {
         $user = auth()->user();
-        $user->delete();
+        $user->tokens()->delete();
         Session::flush();
         return $this->successResponse("",200);
     }

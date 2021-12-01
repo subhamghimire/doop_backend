@@ -18,7 +18,7 @@ Route::post('login', 'Auth\LoginController@login');
 Route::post('register','Auth\RegisterController@store')->name('register');
 Route::get('user', 'Auth\LoginController@user');
 
-Route::group(['namespace'=> 'Api', 'middleware'=>'hasToken'], function () {
+Route::group(['namespace'=> 'Api', 'middleware'=>'api:sanctum'], function () {
     Route::post('score','ScoreController@score');
     Route::get('highScore','ScoreController@highScore');
     Route::post('recharge','BalanceController@recharge');
