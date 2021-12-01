@@ -38,9 +38,10 @@ class ScoreController extends ApiController
 
         $result = [];
 
-        foreach ($players as $player)
+        foreach ($players as $key=>$player)
         {
             $result[] = [
+                'position' => $key+1,
                 'score' => $player->scores->max('score'),
                 'user' => $player->name
             ];
